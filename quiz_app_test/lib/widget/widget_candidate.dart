@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class CandWidget extends StatefulWidget {
   VoidCallback tap; // candwidget을 사용하는 부모 위젯에서 지정한 ontap을 전달해주는 기능
   String text;
@@ -7,6 +8,7 @@ class CandWidget extends StatefulWidget {
   double width;
   bool answerState;
 
+  // ignore: use_key_in_widget_constructors
   CandWidget({
     required this.tap,
     required this.index,
@@ -14,6 +16,8 @@ class CandWidget extends StatefulWidget {
     required this.text,
     required this.answerState,
   });
+  @override
+  // ignore: library_private_types_in_public_api
   _CandWidgetState createState() => _CandWidgetState();
 }
 
@@ -30,10 +34,11 @@ class _CandWidgetState extends State<CandWidget> {
         widget.width * 0.048,
       ),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: Colors.deepPurple),
-          // answerState가 True면 deepPurple, False면 white
-          color: widget.answerState ? Colors.deepPurple : Colors.white),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: Colors.deepPurple),
+        // answerState가 True면 deepPurple, False면 white
+        color: widget.answerState ? Colors.deepPurple : Colors.white,
+      ),
       child: InkWell(
         child: Text(
           widget.text,
@@ -44,7 +49,7 @@ class _CandWidgetState extends State<CandWidget> {
         onTap: () {
           setState(() {
             widget.tap();
-            widget.answerState != widget.answerState;
+            widget.answerState = !widget.answerState;
           });
         },
       ),

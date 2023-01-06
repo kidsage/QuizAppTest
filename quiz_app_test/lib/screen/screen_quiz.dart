@@ -1,20 +1,27 @@
+// ignore_for_file: prefer_final_fields, duplicate_ignore
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:quiz_app_test/model/model_quiz.dart';
 import 'package:quiz_app_test/widget/widget_candidate.dart';
 
+// ignore: must_be_immutable
 class QuizScreen extends StatefulWidget {
   List<Quiz> quizs;
-  QuizScreen({required this.quizs});
+  QuizScreen({super.key, required this.quizs});
   @override
+  // ignore: library_private_types_in_public_api
   _QuizScreenState createState() => _QuizScreenState();
 }
 
 class _QuizScreenState extends State<QuizScreen> {
+  // ignore: prefer_final_fields
   List<int> _answers = [-1, -1, -1];
   List<bool> _answerState = [false, false, false, false];
   int _currentIndex = 0;
+  // ignore: unused_field
   SwiperController _controller = SwiperController();
 
   @override
@@ -34,7 +41,7 @@ class _QuizScreenState extends State<QuizScreen> {
             width: width * 0.85,
             height: height * 0.5,
             child: Swiper(
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               loop: false,
               itemCount: widget.quizs.length,
               itemBuilder: (BuildContext context, int index) {
@@ -60,6 +67,7 @@ class _QuizScreenState extends State<QuizScreen> {
           Container(
             padding: EdgeInsets.fromLTRB(0, width * 0.024, 0, width * 0.024),
             child: Text(
+              // ignore: prefer_interpolation_to_compose_strings
               'Q' + (_currentIndex + 1).toString() + '.',
               style: TextStyle(
                 fontSize: width * 0.06,
@@ -86,23 +94,58 @@ class _QuizScreenState extends State<QuizScreen> {
           Column(
             children: _buildCandidates(width, quiz),
           ),
+          Container(
+            padding: EdgeInsets.all(width * 0.024),
+            child: Center(
+              child: ButtonTheme(
+                minWidth: width * 0.5,
+                height: height * 0.05,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.deepPurple,
+                    textStyle: const TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                  // -1은 정답체크가 안된 것.
+                  onPressed: _answers[_currentIndex] == -1
+                      ? null
+                      : () {
+                          if (_currentIndex == widget.quizs.length - 1) {
+                          } else {
+                            _answerState = [false, false, false, false];
+                            _currentIndex += 1;
+                            _controller.next();
+                          }
+                        },
+                  child: _currentIndex == widget.quizs.length - 1
+                      ? const Text('결과보기')
+                      : const Text('다음문제'),
+                ),
+              ),
+            ),
+          )
         ],
       ),
     );
   }
 
   List<Widget> _buildCandidates(double width, Quiz quiz) {
+    // ignore: no_leading_underscores_for_local_identifiers
     List<Widget> _children = [];
     for (int i = 0; i < 4; i++) {
       _children.add(
         CandWidget(
           index: i,
-          width: width,
           text: quiz.candidates[i],
+          width: width,
           answerState: _answerState[i],
           tap: () {
             setState(() {
-              for (int j = 0; j < 4; i++) {
+              for (int j = 0; j < 4; j++) {
                 if (j == i) {
                   _answerState[j] = true;
                   _answers[_currentIndex] = j;
