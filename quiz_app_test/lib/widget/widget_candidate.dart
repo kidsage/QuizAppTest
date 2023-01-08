@@ -31,7 +31,7 @@ class _CandWidgetState extends State<CandWidget> {
         widget.width * 0.048,
         widget.width * 0.024,
         widget.width * 0.048,
-        widget.width * 0.024,
+        widget.width * 0.024, // width * 0.048일때 클릭미스 및 텍스트 잘림 현상 수정
       ),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
