@@ -11,7 +11,6 @@ class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
   _HomeScreenState createState() => _HomeScreenState();
 }
 
@@ -46,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final response = await http.get(Uri.parse('http://localhost:8000/quiz/3/'));
     if (response.statusCode == 200) {
       setState(() {
-        quizs = parseQuizes(utf8.decode(response.bodyBytes));
+        quizs = parseQuizs(utf8.decode(response.bodyBytes));
         isLoading = false;
       });
     } else {
@@ -120,9 +119,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           children: <Widget>[
                             CircularProgressIndicator(),
                             Padding(
-                              padding: EdgeInsets.only(left: width * 0.036),
+                              padding: EdgeInsets.only(left: width * 0.024),
                             ),
-                            Text('로딩중'),
+                            const Text('로딩중'),
                           ],
                         ),
                       ));

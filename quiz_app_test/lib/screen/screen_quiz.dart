@@ -120,7 +120,7 @@ class _QuizScreenState extends State<QuizScreen> {
                           } else {
                             _answerState = [false, false, false, false];
                             _currentIndex += 1;
-                            _controller.next();
+                            _controller.next(animation: false);
                           }
                         },
                   child: _currentIndex == widget.quizs.length - 1
