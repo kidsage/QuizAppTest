@@ -22,7 +22,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-2&nbmcd-7&yvmv81q5)13^mqa^3xc(4vmom67hs(&l&e#^bfui')
+# SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-2&nbmcd-7&yvmv81q5)13^mqa^3xc(4vmom67hs(&l&e#^bfui')
+SECRET_KEY = 'django-insecure-2&nbmcd-7&yvmv81q5)13^mqa^3xc(4vmom67hs(&l&e#^bfui'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -51,7 +52,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    # 'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'quiz_app_test_backend.urls'
@@ -85,8 +86,8 @@ DATABASES = {
     }
 }
 
-db_from_env = dj_database_url.config(conn_max_age=500)
-DATABASES['default'].update(db_from_env)
+# db_from_env = dj_database_url.config(conn_max_age=500)
+# DATABASES['default'].update(db_from_env)
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators

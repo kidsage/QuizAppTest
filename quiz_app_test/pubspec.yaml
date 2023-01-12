@@ -39,6 +39,8 @@ dependencies:
   # install additional packs
   flutter_swiper:
   auto_size_text:
+  http:
+  provider:
 
 dev_dependencies:
   flutter_test:

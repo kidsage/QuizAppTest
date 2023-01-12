@@ -1,6 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:quiz_app_test/model/model_quiz.dart';
+import 'package:quiz_app_test/providers/api_adapter.dart';
 import 'package:quiz_app_test/screen/screen_quiz.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -12,23 +17,42 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   // quiz 더미 데이터 생성
-  List<Quiz> quizs = [
-    Quiz.fromMap({
-      'title': 'test',
-      'candidates': ['a', 'b', 'c', 'd'],
-      'answer': 0,
-    }),
-    Quiz.fromMap({
-      'title': 'test',
-      'candidates': ['a', 'b', 'c', 'd'],
-      'answer': 0,
-    }),
-    Quiz.fromMap({
-      'title': 'test',
-      'candidates': ['a', 'b', 'c', 'd'],
-      'answer': 0,
-    }),
-  ];
+  // List<Quiz> quizs = [
+  //   Quiz.fromMap({
+  //     'title': 'test',
+  //     'candidates': ['a', 'b', 'c', 'd'],
+  //     'answer': 0,
+  //   }),
+  //   Quiz.fromMap({
+  //     'title': 'test',
+  //     'candidates': ['a', 'b', 'c', 'd'],
+  //     'answer': 0,
+  //   }),
+  //   Quiz.fromMap({
+  //     'title': 'test',
+  //     'candidates': ['a', 'b', 'c', 'd'],
+  //     'answer': 0,
+  //   }),
+  // ];
+
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  List<Quiz> quizs = [];
+  bool isLoading = false;
+  _fetchQuizs() async {
+    setState(() {
+      isLoading = true;
+    });
+    // http.get() -> http.get(Uri.parse())
+    final response = await http.get(Uri.parse('http://localhost:8000/quiz/3/'));
+    if (response.statusCode == 200) {
+      setState(() {
+        quizs = parseQuizes(utf8.decode(response.bodyBytes));
+        isLoading = false;
+      });
+    } else {
+      throw Exception('failed to load data.');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
       onWillPop: () async => false,
       child: Scaffold(
         appBar: AppBar(
+          key: _scaffoldKey,
           title: const Text("My Quiz App"),
           backgroundColor: Colors.deepPurple,
           leading: Container(),
@@ -90,14 +115,27 @@ class _HomeScreenState extends State<HomeScreen> {
                   // RaisedButton 대신 ElevatedButton으로 대체
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => QuizScreen(
-                            quizs: quizs,
-                          ),
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Row(
+                          children: <Widget>[
+                            CircularProgressIndicator(),
+                            Padding(
+                              padding: EdgeInsets.only(left: width * 0.036),
+                            ),
+                            Text('로딩중'),
+                          ],
                         ),
-                      );
+                      ));
+                      _fetchQuizs().whenComplete(() {
+                        return Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => QuizScreen(
+                              quizs: quizs,
+                            ),
+                          ),
+                        );
+                      });
                     },
                     child: const Text(
                       '지금 퀴즈 풀기',
