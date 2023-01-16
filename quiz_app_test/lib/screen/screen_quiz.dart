@@ -35,7 +35,7 @@ class _QuizScreenState extends State<QuizScreen> {
             width: width * 0.85,
             height: height * 0.5,
             child: Swiper(
-              physics: const NeverScrollableScrollPhysics(),
+              physics: NeverScrollableScrollPhysics(),
               loop: false,
               itemCount: widget.quizs.length,
               itemBuilder: (BuildContext context, int index) {
@@ -99,7 +99,7 @@ class _QuizScreenState extends State<QuizScreen> {
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.deepPurple,
-                    textStyle: const TextStyle(
+                    textStyle: TextStyle(
                       color: Colors.white,
                     ),
                   ),
@@ -120,12 +120,12 @@ class _QuizScreenState extends State<QuizScreen> {
                           } else {
                             _answerState = [false, false, false, false];
                             _currentIndex += 1;
-                            _controller.next(animation: false);
+                            _controller.next();
                           }
                         },
                   child: _currentIndex == widget.quizs.length - 1
-                      ? const Text('결과보기')
-                      : const Text('다음문제'),
+                      ? Text('결과보기')
+                      : Text('다음문제'),
                 ),
               ),
             ),

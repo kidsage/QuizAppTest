@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:quiz_app_test/model/model_quiz.dart';
 import 'package:quiz_app_test/providers/api_adapter.dart';
@@ -8,7 +6,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  HomeScreen({super.key});
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -65,7 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Scaffold(
         appBar: AppBar(
           key: _scaffoldKey,
-          title: const Text("My Quiz App"),
+          title: Text("My Quiz App"),
           backgroundColor: Colors.deepPurple,
           leading: Container(),
         ),
@@ -89,7 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const Text(
+            Text(
               '퀴즈를 풀기 전 안내사항입니다.\n꼼꼼히 읽고 퀴즈 풀기를 눌러주세요.',
               textAlign: TextAlign.center,
             ),
@@ -121,7 +119,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             Padding(
                               padding: EdgeInsets.only(left: width * 0.024),
                             ),
-                            const Text('로딩중'),
+                            Text('로딩중'),
                           ],
                         ),
                       ));
@@ -136,7 +134,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         );
                       });
                     },
-                    child: const Text(
+                    child: Text(
                       '지금 퀴즈 풀기',
                       style: TextStyle(color: Colors.white),
                     ),

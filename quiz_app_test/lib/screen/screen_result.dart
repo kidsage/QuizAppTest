@@ -109,7 +109,7 @@ class ResultScreen extends StatelessWidget {
                       onPressed: () {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
-                          return const HomeScreen();
+                          return HomeScreen();
                         }));
                       },
                       child: const Text(
